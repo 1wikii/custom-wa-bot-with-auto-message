@@ -1,9 +1,22 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const axios = require("axios");
 const qrcode = require("qrcode-terminal");
+const cron = require("node-cron");
+
 require("dotenv").config();
 
 const client = new Client();
+
+//   const gfNumber = process.env.targetNumber;
+
+const gfNumber = process.env.testingTargetNumber;
+
+const messages = [
+  "Pagii sayang, semangat buat hari iniii",
+  "Selamat pagi babyy, semangatt sayangg",
+  "Semangatt sayang buat hari iniii",
+];
+const randMsg = messages[Math.floor(Math.random() * 3)];
 
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
@@ -11,16 +24,20 @@ client.on("qr", (qr) => {
 
 client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
+
+  cron.schedule(
+    "10 6 * * *",
+    async () => {
+      await client.sendMessage(gfNumber, randMsg);
+    },
+    {
+      timezone: "Asia/Jakarta",
+    }
+  );
 });
 
 client.on("message_create", async (msg) => {
   if (msg.fromMe) return;
-
-  //   const gfNumber = process.env.targetNumber;
-
-  const gfNumber = process.env.testingTargetNumber;
-  //   console.log(msg.from, ": ");
-  //   console.log(msg.body);
 
   if (msg.from !== gfNumber) return;
 
