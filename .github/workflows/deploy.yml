@@ -27,4 +27,4 @@ jobs:
 
             npm install
             
-            EOF
+          EOF
