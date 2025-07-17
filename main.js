@@ -5,7 +5,16 @@ const cron = require("node-cron");
 
 require("dotenv").config();
 
-const client = new Client();
+const client = new Client({
+  puppeteer: {
+    executablePath: "/usr/bin/chromium-browser",
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage", // Berguna untuk VPS dengan RAM kecil
+    ],
+  },
+});
 
 //   const gfNumber = process.env.targetNumber;
 
