@@ -28,11 +28,10 @@ const messages = [
 const randMsg = messages[Math.floor(Math.random() * 3)];
 
 client.on("qr", (qr) => {
-  //   qrcode.generate(qr, { small: true });
+  qrcode.generate(qr, { small: true });
 
-  const qrimg = require("qrcode");
-
-  qrimg.toFile("qr.png", qr, () => {});
+  //   const qrimg = require("qrcode");
+  //   qrimg.toFile("qr.png", qr, () => {});
 });
 
 client.on("ready", () => {
