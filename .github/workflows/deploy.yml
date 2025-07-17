@@ -27,6 +27,4 @@ jobs:
 
             npm install
             
-            node main.js
-            
             EOF
