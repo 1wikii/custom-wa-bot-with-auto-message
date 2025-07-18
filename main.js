@@ -16,9 +16,7 @@ const client = new Client({
   },
 });
 
-//   const gfNumber = process.env.targetNumber;
-
-const gfNumber = process.env.testingTargetNumber;
+ const gfNumber = process.env.targetNumber;
 
 const messages = [
   "Pagii sayang, semangat buat hari iniii",
@@ -38,7 +36,7 @@ client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "10 6 * * *",
+    "40 2 * * *",
     async () => {
       await client.sendMessage(gfNumber, randMsg);
     },
@@ -49,6 +47,10 @@ client.on("ready", () => {
 });
 
 client.on("message_create", async (msg) => {
+   
+
+  console.log(msg.body);
+
   if (msg.fromMe) return;
 
   if (msg.from !== gfNumber) return;
