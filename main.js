@@ -36,7 +36,7 @@ client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "40 2 * * *",
+    "28 3 * * *",
     async () => {
       await client.sendMessage(gfNumber, randMsg);
     },
