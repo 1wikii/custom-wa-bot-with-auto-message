@@ -23,8 +23,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd custom-wa-bot-with-auto-message
 
-            git pull origin main
-
+            git pull origin master
+            
             npm install
             
           EOF
