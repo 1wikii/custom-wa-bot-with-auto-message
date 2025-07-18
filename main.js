@@ -37,10 +37,14 @@ client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "41 3 * * *",
+    "50 3 * * *",
     async () => {
-      await client.sendMessage(gfNumber, randMsg);
-      await client.sendMessage(gfNumber2, randMsg);
+      try {
+        await client.sendMessage(gfNumber, randMsg);
+        await client.sendMessage(gfNumber2, randMsg);
+      } catch (error) {
+        console.error("❌ Error saat mengirim pesan:", error.message);
+      }
     },
     {
       timezone: "Asia/Jakarta",
