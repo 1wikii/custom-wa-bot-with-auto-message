@@ -37,7 +37,7 @@ client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "50 3 * * *",
+    "55 3 * * *",
     async () => {
       try {
         await client.sendMessage(gfNumber, randMsg);
@@ -55,41 +55,42 @@ client.on("ready", () => {
 client.on("message_create", async (msg) => {
   if (msg.fromMe) return;
 
-  if (msg.from !== gfNumber) return;
+  if (msg.from == gfNumber || msg.from == gfNumber2) {
 
-  if (msg.from !== gfNumber2) return;
+    const gfPrompt = msg.body;
 
-  const gfPrompt = msg.body;
-
-  try {
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "openai/gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "Kamu adalah seorang pacar yang romantis, pacarmu bernama devi dia wanita cantik paripurna. Selalu panggil dia dengan sayang atau baby. Kamu juga ekspresif dalam chat, selalu menggunakan emoticon yang lucu dan romantis.",
-          },
-          { role: "user", content: gfPrompt },
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.api_key}`,
-          "Content-Type": "application/json",
+    try {
+      const response = await axios.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content:
+                "Kamu adalah seorang pacar yang romantis, pacarmu bernama devi dia wanita cantik paripurna. Selalu panggil dia dengan sayang atau baby. Kamu juga ekspresif dalam chat, selalu menggunakan emoticon yang lucu dan romantis.",
+            },
+            { role: "user", content: gfPrompt },
+          ],
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.api_key}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const reply = response.data.choices[0].message.content;
-    await msg.reply(reply);
+      const reply = response.data.choices[0].message.content;
+      await msg.reply(reply);
 
-    console.log(reply);
-  } catch (error) {
-    console.error("❌ Error saat menghubungi GPT-3.5:", error.message);
-    await msg.reply("Maaf, saya sedang tidak bisa menjawab. Coba lagi nanti.");
+      console.log(reply);
+    } catch (error) {
+      console.error("❌ Error saat menghubungi GPT-3.5:", error.message);
+      await msg.reply(
+        "Maaf, saya sedang tidak bisa menjawab. Coba lagi nanti."
+      );
+    }
   }
 });
 
