@@ -6,17 +6,17 @@ const cron = require("node-cron");
 require("dotenv").config();
 
 const client = new Client({
-  puppeteer: {
-    executablePath: "/usr/bin/google-chrome-stable",
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage", // Berguna untuk VPS dengan RAM kecil
-    ],
-  },
+  // puppeteer: {
+  //   executablePath: "/usr/bin/google-chrome-stable",
+  //   args: [
+  //     "--no-sandbox",
+  //     "--disable-setuid-sandbox",
+  //     "--disable-dev-shm-usage", // Berguna untuk VPS dengan RAM kecil
+  //   ],
+  // },
 });
 
- const gfNumber = process.env.targetNumber;
+const gfNumber = process.env.targetNumber;
 
 const messages = [
   "Pagii sayang, semangat buat hari iniii",
@@ -47,10 +47,6 @@ client.on("ready", () => {
 });
 
 client.on("message_create", async (msg) => {
-   
-
-  console.log(msg.body);
-
   if (msg.fromMe) return;
 
   if (msg.from !== gfNumber) return;
@@ -66,7 +62,7 @@ client.on("message_create", async (msg) => {
           {
             role: "system",
             content:
-              "Kamu adalah seorang pacar yang romantis, pacarmu bernama devi dia wanita cantik paripurna. Selalu panggil dia dengan sayang atau baby.",
+              "Kamu adalah seorang pacar yang romantis, pacarmu bernama devi dia wanita cantik paripurna. Selalu panggil dia dengan sayang atau baby. Kamu juga ekspresif dalam chat, selalu menggunakan emoticon yang lucu dan romantis.",
           },
           { role: "user", content: gfPrompt },
         ],
@@ -81,6 +77,8 @@ client.on("message_create", async (msg) => {
 
     const reply = response.data.choices[0].message.content;
     await msg.reply(reply);
+
+    console.log(reply);
   } catch (error) {
     console.error("❌ Error saat menghubungi GPT-3.5:", error.message);
     await msg.reply("Maaf, saya sedang tidak bisa menjawab. Coba lagi nanti.");
