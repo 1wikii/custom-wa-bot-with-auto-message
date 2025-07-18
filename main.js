@@ -1,4 +1,4 @@
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { Client } = require("whatsapp-web.js");
 const axios = require("axios");
 const qrcode = require("qrcode-terminal");
 const cron = require("node-cron");
@@ -17,6 +17,7 @@ const client = new Client({
 });
 
 const gfNumber = process.env.targetNumber;
+const gfNumber2 = process.env.targetNumber2;
 
 const messages = [
   "Pagii sayang, semangat buat hari iniii",
@@ -36,9 +37,10 @@ client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "28 3 * * *",
+    "41 3 * * *",
     async () => {
       await client.sendMessage(gfNumber, randMsg);
+      await client.sendMessage(gfNumber2, randMsg);
     },
     {
       timezone: "Asia/Jakarta",
@@ -50,6 +52,8 @@ client.on("message_create", async (msg) => {
   if (msg.fromMe) return;
 
   if (msg.from !== gfNumber) return;
+
+  if (msg.from !== gfNumber2) return;
 
   const gfPrompt = msg.body;
 
