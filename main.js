@@ -16,28 +16,27 @@ const client = new Client({
   },
 });
 
+const autoRespon = false;
+
 const gfNumber = process.env.targetNumber;
 const gfNumber2 = process.env.targetNumber2;
 
 const messages = [
-  "Pagii sayang, semangat buat hari iniii",
-  "Selamat pagi babyy, semangatt sayangg",
-  "Semangatt sayang buat hari iniii",
+  "Pagii sayang, semangat buat hari iniii ❤️",
+  "Selamat pagi babyy, semangatt sayangg 😘",
+  "Semangatt sayang buat hari iniii 🥰",
 ];
 const randMsg = messages[Math.floor(Math.random() * 3)];
 
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
-
-  //   const qrimg = require("qrcode");
-  //   qrimg.toFile("qr.png", qr, () => {});
 });
 
 client.on("ready", () => {
   console.log("✅ Asistant pcr siap!");
 
   cron.schedule(
-    "53 8 * * *",
+    "11 8 * * *",
     async () => {
       try {
         await client.sendMessage(gfNumber, randMsg);
@@ -55,7 +54,7 @@ client.on("ready", () => {
 client.on("message_create", async (msg) => {
   if (msg.fromMe) return;
 
-  if (msg.from == gfNumber || msg.from == gfNumber2) {
+  if ((msg.from == gfNumber || msg.from == gfNumber2) && autoRespon) {
     const gfPrompt = msg.body;
 
     try {
