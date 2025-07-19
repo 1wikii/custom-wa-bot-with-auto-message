@@ -56,7 +56,6 @@ client.on("message_create", async (msg) => {
   if (msg.fromMe) return;
 
   if (msg.from == gfNumber || msg.from == gfNumber2) {
-
     const gfPrompt = msg.body;
 
     try {
